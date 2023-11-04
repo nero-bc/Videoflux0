@@ -34,7 +34,7 @@ def get_commands(process_status):
             input_file = f'{str(process_status.send_files[-1])}'
             output_file = f"{process_status.dir}/compress/{get_output_name(process_status)}"
             file_duration = get_video_duration(input_file)
-            command = ['ffmpeg','-hide_banner',
+            command = ['zender','-hide_banner',
                                         '-progress', f"{log_file}",
                                         '-i', f'{input_file}']
             if compress_map:
@@ -71,7 +71,7 @@ def get_commands(process_status):
         input_file = f'{str(process_status.send_files[-1])}'
         output_file = f"{process_status.dir}/watermark/{get_output_name(process_status)}"
         file_duration = get_video_duration(input_file)
-        command = ['ffmpeg','-hide_banner',
+        command = ['zender','-hide_banner',
                                     '-progress', f"{log_file}",
                                     '-i', f'{str(input_file)}', "-i", f"{str(watermark_path)}"]
         if watermark_map:
@@ -111,7 +111,7 @@ def get_commands(process_status):
             with open(input_file, "w", encoding="utf-8") as f:
                         f.write(str(infile_names).strip('\n'))
             output_file = f"{process_status.dir}/merge/{get_output_name(process_status)}"
-            command = ['ffmpeg','-hide_banner',
+            command = ['zender','-hide_banner',
                                     '-progress', f"{log_file}",
                                         "-f", "concat",
                                         "-safe", "0"]
@@ -144,7 +144,7 @@ def get_commands(process_status):
             input_sub += ['-i', f'{str(subtitle)}']
             sub_map+= ['-map', f'{smap}:0']
             smap +=1
-        command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
+        command = ['zender','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         command+= input_sub + sub_map + ['-map','0:v?', '-map',f'{str(process_status.amap_options)}?', '-map','0:s?', '-disposition:s:0','default']
         if softmux_encode:
                 encoder = get_data()[process_status.user_id]['softmux']['encoder']
@@ -182,7 +182,7 @@ def get_commands(process_status):
             input_sub += ['-i', f'{str(subtitle)}']
             sub_map+= ['-map', f'{smap}:0']
             smap +=1
-        command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
+        command = ['zender','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         command+= input_sub + sub_map + ['-map','0:v?', '-map',f'{str(process_status.amap_options)}?', '-disposition:s:0','default']
         if softremux_encode:
                 encoder = get_data()[process_status.user_id]['softremux']['encoder']
@@ -217,7 +217,7 @@ def get_commands(process_status):
             input_file = f'{str(process_status.send_files[-1])}'
             output_file = f"{process_status.dir}/convert/{get_output_name(process_status, convert_quality=process_status.convert_quality)}"
             file_duration = get_video_duration(input_file)
-            command = ['ffmpeg','-hide_banner',
+            command = ['zender','-hide_banner',
                                             '-progress', f"{log_file}",
                                             '-i', f'{input_file}',
                                             '-vf', f"scale=-2:{process_status.convert_quality}"]
@@ -254,7 +254,7 @@ def get_commands(process_status):
         output_file = f"{process_status.dir}/hardmux/{get_output_name(process_status)}"
         file_duration = get_video_duration(input_file)
         sub_loc = process_status.subtitles[-1]
-        command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
+        command = ['zender','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         command+= ['-vf', f"subtitles='{sub_loc}'",
                                     '-map','0:v',
                                     '-map',f'{str(process_status.amap_options)}']
@@ -284,7 +284,7 @@ def get_commands(process_status):
         output_file = f"{process_status.dir}/metadata/{get_output_name(process_status)}"
         file_duration = get_video_duration(input_file)
         custom_metadata = process_status.custom_metadata
-        command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
+        command = ['zender','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         for m in custom_metadata:
             command+=m
         command += ["-map", "0", "-c", "copy", '-y', f"{output_file}"]
@@ -297,6 +297,6 @@ def get_commands(process_status):
         input_file = f'{str(process_status.send_files[-1])}'
         output_file = f"{process_status.dir}/index/{get_output_name(process_status)}"
         file_duration = get_video_duration(input_file)
-        command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}', '-map', '0:v?'] + process_status.custom_index
+        command = ['zender','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}', '-map', '0:v?'] + process_status.custom_index
         command += ["-c", "copy", '-y', f"{output_file}"]
         return command, log_file, input_file, output_file, file_duration

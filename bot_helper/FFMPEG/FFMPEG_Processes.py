@@ -86,7 +86,7 @@ async def gen_ss_list(duration, ss_no):
 ###############------Generate_ScreenShot------###############
 async def generate_screenshoot(ss_time, input_video, ss_name):
     command = [
-        "ffmpeg",
+        "zender",
         "-ss",
         str(ss_time),
         "-i",
@@ -119,13 +119,13 @@ class FFMPEG:
                     parted_name = f"{str(file_name)}.part{str(i).zfill(3)}{str(extension)}"
                     create_direc(f"{dirpath}/split/")
                     out_path = join(f"{dirpath}/split/", parted_name)
-                    command = ["ffmpeg", "-hide_banner", "-ss", str(start_time),
+                    command = ["zender", "-hide_banner", "-ss", str(start_time),
                                 "-i", f"{str(file)}", "-fs", str(split_size), "-map", "0", "-map_chapters", "-1",
                                 "-c", "copy", f"{out_path}"]
                     result = await run_process_command(command)
                     if not result:
                             await delete_trash(out_path)
-                            command = ["ffmpeg", "-hide_banner", "-ss", str(start_time),
+                            command = ["zender", "-hide_banner", "-ss", str(start_time),
                                 "-i", f"{str(file)}", "-fs", str(split_size), "-map_chapters", "-1",
                                 "-c", "copy", out_path]
                             result = await run_process_command(command)
@@ -185,8 +185,8 @@ class FFMPEG:
                                 vframes = '750'
                         else:
                                 vframes = '1500'
-                        # cmd_sample = ["ffmpeg", "-ss", str(vstart_time), "-to",  str(vend_time), "-i", f"{input_video}","-c", "copy", '-y', f"{sample_name}"]
-                        cmd_sample= ['ffmpeg', '-ss', f'{vstart_time}s', '-i', f"{input_video}", '-vframes', f'{vframes}', '-vsync', '1', '-async', '-1', '-acodec', 'copy', '-vcodec', 'copy', '-y', f"{sample_name}"]
+                        # cmd_sample = ["zender", "-ss", str(vstart_time), "-to",  str(vend_time), "-i", f"{input_video}","-c", "copy", '-y', f"{sample_name}"]
+                        cmd_sample= ['zender', '-ss', f'{vstart_time}s', '-i', f"{input_video}", '-vframes', f'{vframes}', '-vsync', '1', '-async', '-1', '-acodec', 'copy', '-vcodec', 'copy', '-y', f"{sample_name}"]
                         sample_result = await run_process_command(cmd_sample)
                         if sample_result and exists(sample_name):
                                 try:
@@ -209,13 +209,13 @@ class FFMPEG:
                 output_meta = f"{direc}/{get_output_name(process_status)}"
                 custom_metadata_title = get_data()[process_status.user_id]['metadata']
                 process_status.update_process_message(f"🪀Changing MetaData\n{process_status.get_task_details()}")
-                cmd_meta = ["ffmpeg", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                 met_result = await run_process_command(cmd_meta)
                 if not met_result:
-                        cmd_meta = ["ffmpeg", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                         met_result = await run_process_command(cmd_meta)
                 if not met_result:
-                        cmd_meta = ["ffmpeg", "-i", f"{dl_loc}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                         met_result = await run_process_command(cmd_meta)
                 if met_result:
                         await process_status.event.reply(f"✅Metadata Set Successfully")

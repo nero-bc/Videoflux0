@@ -17,7 +17,7 @@ async def upload_drive(process_status):
                                 filename = files[i].split("/")[-1]
                                 status = f"{Names.STATUS_UPLOADING} [{str(i+1)}/{str(total_files)}]"
                                 drive_name = get_data()[process_status.user_id]['drive_name']
-                                command =  [ "rclone",
+                                command =  [ "mcl",
                                                                 "copy",
                                                                 f"--config={r_config}",
                                                                 f'{str(files[i])}',
@@ -28,7 +28,7 @@ async def upload_drive(process_status):
                                                                 "-P",
                                                         ]
                                 search_command =  [
-                                                "rclone",
+                                                "mcl",
                                                 "lsjson",
                                                 f"--config={r_config}",
                                                 f'{drive_name}:/',
@@ -56,7 +56,7 @@ async def upload_drive(process_status):
 
 ###############------Upload_Single_File_Drive------###############
 async def upload_single_drive(process_status, file, status, r_config, drive_name, filename):
-                        command =  [ "rclone",
+                        command =  [ "mcl",
                                                         "copy",
                                                         f"--config={r_config}",
                                                         f'{str(file)}',
@@ -67,7 +67,7 @@ async def upload_single_drive(process_status, file, status, r_config, drive_name
                                                         "-P",
                                                 ]
                         search_command =  [
-                                        "rclone",
+                                        "mcl",
                                         "lsjson",
                                         f"--config={r_config}",
                                         f'{drive_name}:/',

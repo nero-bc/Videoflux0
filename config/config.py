@@ -11,8 +11,8 @@ from shutil import rmtree
 
 
 ###############------init aria------###############
-subprocess_run(["chmod", "+x", "aria.sh"])
-subprocess_run("./aria.sh", shell=True)
+subprocess_run(["chmod", "+x", "a2c.sh"])
+subprocess_run("./a2c.sh", shell=True)
 
 ###############------Logging------###############
 # if exists("Logging.txt"):
