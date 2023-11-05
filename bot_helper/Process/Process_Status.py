@@ -192,7 +192,7 @@ def generate_ffmpeg_status_head(user_id, pmode, input_size):
 
 
 class ProcessStatus:
-        def __init__(self, user_id, chat_id, user_name, user_first_name, event, process_type, file_name=False, thumbnail=False, start_time=False, custom_metadata=False, custom_index=False, video_title=False):
+        def __init__(self, user_id, chat_id, user_name, user_first_name, event, process_type, file_name=False, thumbnail=False, start_time=False, custom_metadata=False, custom_index=False):
                 self.user_id = user_id
                 self.chat_id = chat_id
                 self.amap_options =  '0:a'
@@ -224,7 +224,6 @@ class ProcessStatus:
                 self.multi_task_no = 0
                 self.custom_metadata = custom_metadata
                 self.custom_index = custom_index
-                self.video_title = video_title  # New attribute to hold video title
                 if self.user_name:
                         self.added_by = f'[{self.user_first_name}](https://t.me/{str(self.user_name)})'
                 else:
