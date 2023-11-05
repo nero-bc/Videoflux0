@@ -203,19 +203,20 @@ class FFMPEG:
     ###############------Change_Metadata------###############
     async def change_metadata(process_status):
         if get_data()[process_status.user_id]['custom_metadata']:
+         t_data()[process_status.user_id]['custom_metadata']:
                 dl_loc = f'{str(process_status.send_files[-1])}'
                 direc = f"{process_status.dir}/metadata/"
                 create_direc(direc)
                 output_meta = f"{direc}/{get_output_name(process_status)}"
                 custom_metadata_title = get_data()[process_status.user_id]['metadata']
                 process_status.update_process_message(f"🪀Changing MetaData\n{process_status.get_task_details()}")
-                cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata", f"title={custom_metadata_title}", "-metadata:s:a", f"title={custom_metadata_title}", "-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                 met_result = await run_process_command(cmd_meta)
                 if not met_result:
-                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:a", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata", f"title={custom_metadata_title}", f"-metadata:s:a", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                         met_result = await run_process_command(cmd_meta)
                 if not met_result:
-                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
+                        cmd_meta = ["zender", "-i", f"{dl_loc}", f"-metadata", f"title={custom_metadata_title}", f"-metadata:s:s", f"title={custom_metadata_title}", "-map", "0", "-c", "copy", '-y', f"{output_meta}"]
                         met_result = await run_process_command(cmd_meta)
                 if met_result:
                         await process_status.event.reply(f"✅Metadata Set Successfully")
